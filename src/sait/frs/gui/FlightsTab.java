@@ -260,7 +260,7 @@ public class FlightsTab extends TabBase
 					manager.makeReservation(manager.findFlightByCode(tFlight.getText()),tName.getText(),tCitizenship.getText()).getCode());
 				} catch (NullFlightException | NoMoreSeatsException | InvalidNameException
 						| InvalidCitizenshipException e) {
-					JOptionPane.showMessageDialog(null, e);
+					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
 			}
 			

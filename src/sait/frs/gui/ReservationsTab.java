@@ -240,12 +240,13 @@ public class ReservationsTab extends TabBase {
 					r.setName(tName1.getText());
 					r.setCitizenship(tCitizenship.getText());
 					r.setActive( (tStatus.getSelectedIndex() == 0 ) ? true : false );
+					JOptionPane.showMessageDialog(null, r.getCode() + "has been updated");
 				} catch (InvalidNameException e) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, e);
+					JOptionPane.showMessageDialog(null,e.getMessage());
 				} catch (InvalidCitizenshipException e) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, e);
+					JOptionPane.showMessageDialog(null,e.getMessage());
 				}
 				manager.persist();
 			}
