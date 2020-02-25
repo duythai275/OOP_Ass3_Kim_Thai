@@ -232,9 +232,7 @@ public class FlightsTab extends TabBase
 				tDay.setText(f.getWeekday());
 				tTime.setText(f.getTime());
 				tCost.setText(f.getCostPerSeat()+"");
-			} catch ( Exception e ) {
-				
-			}
+			} catch ( Exception e ) {}
 			
 		}
 		
