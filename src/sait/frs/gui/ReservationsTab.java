@@ -204,6 +204,18 @@ public class ReservationsTab extends TabBase {
 		return panel;
 	}
 	
+	public void emptyFields () {
+		tCode1.setText("");
+		tFlight.setText("");
+		tAirline1.setText("");
+		tCost.setText("");
+		tName1.setText("");
+		tCitizenship.setText("");
+		tStatus.setSelectedIndex(0);
+		
+//		reservationsModel.clear();
+	}
+	
 	private class MyListSelectionListener implements ListSelectionListener 
 	{
 		@Override
@@ -227,11 +239,16 @@ public class ReservationsTab extends TabBase {
 		public void actionPerformed(ActionEvent event) {
 			if ( event.getSource() == findReservations ) {
 				reservationsModel.clear();
+				emptyFields();
 				ArrayList<Reservation> reservations = manager.findReservations(tCode.getText(), tAirline.getText(), tName.getText());
-				for ( Reservation r : reservations )
-				{
-					reservationsModel.addElement(r);
-				};
+				if ( reservations.size() == 0 ) {
+					JOptionPane.showMessageDialog(null, "No Reservations found");
+				} else {
+					for ( Reservation r : reservations )
+					{
+						reservationsModel.addElement(r);
+					};
+				}
 			}
 			
 			if ( event.getSource() == update ) {
@@ -241,6 +258,7 @@ public class ReservationsTab extends TabBase {
 					r.setCitizenship(tCitizenship.getText());
 					r.setActive( (tStatus.getSelectedIndex() == 0 ) ? true : false );
 					JOptionPane.showMessageDialog(null, r.getCode() + "has been updated");
+					emptyFields();
 				} catch (InvalidNameException e) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null,e.getMessage());

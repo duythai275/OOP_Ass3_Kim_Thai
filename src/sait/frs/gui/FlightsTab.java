@@ -64,6 +64,8 @@ public class FlightsTab extends TabBase
 		
 		JPanel southPanel = createSouthPanel();
 		panel.add(southPanel, BorderLayout.SOUTH);
+		
+		
 	}
 	
 	/**
@@ -116,48 +118,54 @@ public class FlightsTab extends TabBase
 		title.setFont(new Font("serif", Font.PLAIN, 25));
 		panel.add(title, BorderLayout.NORTH);
 		
+		
+		
+		JPanel GridLayout = new JPanel();
+		GridLayout.setLayout(new GridLayout(7,2));
+		
 		JPanel centerPanel = new JPanel();
-		centerPanel.setLayout(new GridLayout(7,2));
+		centerPanel.setLayout(new FlowLayout());
+		centerPanel.add(GridLayout);
 		
 		JLabel lFlight = new JLabel("Flight: ", SwingConstants.RIGHT);
+		GridLayout.add(lFlight);
 		tFlight = new JTextField(10);
 		tFlight.setEditable(false);
-		centerPanel.add(lFlight);
-		centerPanel.add(tFlight);
+		GridLayout.add(tFlight);
 		
 		JLabel lAirline = new JLabel("Airline: ",SwingConstants.RIGHT);
+		GridLayout.add(lAirline);
 		tAirline = new JTextField(10);
 		tAirline.setEditable(false);
-		centerPanel.add(lAirline);
-		centerPanel.add(tAirline);
+		GridLayout.add(tAirline);
 		
 		JLabel lDay = new JLabel("Day: ",SwingConstants.RIGHT);
 		tDay = new JTextField(10);
 		tDay.setEditable(false);
-		centerPanel.add(lDay);
-		centerPanel.add(tDay);
+		GridLayout.add(lDay);
+		GridLayout.add(tDay);
 		
 		JLabel lTime = new JLabel("Time: ",SwingConstants.RIGHT);
 		tTime = new JTextField(10);
 		tTime.setEditable(false);
-		centerPanel.add(lTime);
-		centerPanel.add(tTime);
+		GridLayout.add(lTime);
+		GridLayout.add(tTime);
 		
 		JLabel lCost = new JLabel("Cost: ",SwingConstants.RIGHT);
 		tCost = new JTextField(10);
 		tCost.setEditable(false);
-		centerPanel.add(lCost);
-		centerPanel.add(tCost);
+		GridLayout.add(lCost);
+		GridLayout.add(tCost);
 		
 		JLabel lName = new JLabel("Name: ",SwingConstants.RIGHT);
 		tName = new JTextField(10);
-		centerPanel.add(lName);
-		centerPanel.add(tName);
+		GridLayout.add(lName);
+		GridLayout.add(tName);
 		
 		JLabel lCitizenship = new JLabel("Citizenship: ",SwingConstants.RIGHT);
 		tCitizenship = new JTextField(10);
-		centerPanel.add(lCitizenship);
-		centerPanel.add(tCitizenship);
+		GridLayout.add(lCitizenship);
+		GridLayout.add(tCitizenship);
 		
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
@@ -218,6 +226,22 @@ public class FlightsTab extends TabBase
 		return panel;
 	}
 	
+	public void emptyFields () {
+		tFlight.setText("");
+		tAirline.setText("");
+		tDay.setText("");
+		tTime.setText("");
+		tCost.setText("");
+		tName.setText("");
+		tCitizenship.setText("");
+		
+//		flightsModel.clear();
+		
+//		tFrom.setSelectedIndex(0);
+//		tTo.setSelectedIndex(0);
+//		tDate.setSelectedIndex(0);
+	}
+	
 	private class MyListSelectionListener implements ListSelectionListener 
 	{
 		/**
@@ -245,21 +269,29 @@ public class FlightsTab extends TabBase
 			
 			if ( event.getSource() == findFlights ) {
 				flightsModel.clear();
+				emptyFields();
 				ArrayList<Flight> flights = manager.findFlights((String) tFrom.getSelectedItem(),(String) tTo.getSelectedItem(),(String) tDate.getSelectedItem());
-				for ( Flight f : flights )
-				{
-					flightsModel.addElement(f);
-				};
+				if ( flights.size() == 0 ) {
+					JOptionPane.showMessageDialog(null, "No Flights found");
+				}
+				else {
+					for ( Flight f : flights )
+					{
+						flightsModel.addElement(f);
+					};
+				}
 			}
 			
 			if ( event.getSource() == reserve ) {
 				try {
 					JOptionPane.showMessageDialog(null, "Reversation created. Your code is " +
 					manager.makeReservation(manager.findFlightByCode(tFlight.getText()),tName.getText(),tCitizenship.getText()).getCode());
+					emptyFields();
 				} catch (NullFlightException | NoMoreSeatsException | InvalidNameException
 						| InvalidCitizenshipException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 				}
+				manager.persist();
 			}
 			
 		}

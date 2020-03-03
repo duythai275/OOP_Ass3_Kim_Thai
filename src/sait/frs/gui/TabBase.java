@@ -29,4 +29,6 @@ public abstract class TabBase
 	public JPanel getPanel() {
 		return this.panel;
 	}
+
+	protected abstract void emptyFields();
 }

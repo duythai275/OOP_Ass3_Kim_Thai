@@ -5,6 +5,7 @@ package sait.frs.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.EOFException;
 
 import javax.swing.*;
 
@@ -65,6 +66,8 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		this.manager = new Manager();
+		
+		
 		
 		setTitle("Flight Reservation Management System");
 		
@@ -164,10 +167,12 @@ private class TabButtonActionListener implements ActionListener
 			if (e.getSource() == flightsButton) 
 			{
 				cardLayout.show(centerPanel, TAB_FLIGHTS);
+				flightsTab.emptyFields();
 			} 
 			else if (e.getSource() == reservationsButton) 
 			{
 				cardLayout.show(centerPanel, TAB_RESERVATIONS);
+				reservationsTab.emptyFields();
 			}
 		}
 		
