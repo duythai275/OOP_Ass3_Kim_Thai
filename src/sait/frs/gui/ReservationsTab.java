@@ -217,8 +217,6 @@ public class ReservationsTab extends TabBase {
 		tName1.setText("");
 		tCitizenship.setText("");
 		tStatus.setSelectedIndex(0);
-		
-//		reservationsModel.clear();
 	}
 	
 	public void clearList() {
@@ -229,6 +227,18 @@ public class ReservationsTab extends TabBase {
 		tCode.setText("");
 		tAirline.setText("");
 		tName.setText("");
+	}
+	
+	private void fillList() {
+		ArrayList<Reservation> reservations = manager.findReservations(tCode.getText(), tAirline.getText(), tName.getText());
+		if ( reservations.size() == 0 ) {
+			JOptionPane.showMessageDialog(null, "No Reservations found");
+		} else {
+			for ( Reservation r : reservations )
+			{
+				reservationsModel.addElement(r);
+			};
+		}
 	}
 	
 	private class MyListSelectionListener implements ListSelectionListener 
@@ -253,17 +263,9 @@ public class ReservationsTab extends TabBase {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			if ( event.getSource() == findReservations ) {
-				reservationsModel.clear();
+				clearList();
 				emptyFields();
-				ArrayList<Reservation> reservations = manager.findReservations(tCode.getText(), tAirline.getText(), tName.getText());
-				if ( reservations.size() == 0 ) {
-					JOptionPane.showMessageDialog(null, "No Reservations found");
-				} else {
-					for ( Reservation r : reservations )
-					{
-						reservationsModel.addElement(r);
-					};
-				}
+				fillList();
 			}
 			
 			if ( event.getSource() == update ) {
@@ -272,8 +274,10 @@ public class ReservationsTab extends TabBase {
 					r.setName(tName1.getText());
 					r.setCitizenship(tCitizenship.getText());
 					r.setActive( (tStatus.getSelectedIndex() == 0 ) ? true : false );
-					JOptionPane.showMessageDialog(null, r.getCode() + "has been updated");
+					JOptionPane.showMessageDialog(null, r.getCode() + " has been updated");
+					clearList();
 					emptyFields();
+					fillList();
 				} catch (InvalidNameException e) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null,e.getMessage());

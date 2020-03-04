@@ -244,6 +244,19 @@ public class FlightsTab extends TabBase
 		tDate.setSelectedIndex(0);
 	}
 	
+	private void fillList() {
+		ArrayList<Flight> flights = manager.findFlights((String) tFrom.getSelectedItem(),(String) tTo.getSelectedItem(),(String) tDate.getSelectedItem());
+		if ( flights.size() == 0 ) {
+			JOptionPane.showMessageDialog(null, "No Flights found");
+		}
+		else {
+			for ( Flight f : flights )
+			{
+				flightsModel.addElement(f);
+			};
+		}
+	} 
+	
 	private class MyListSelectionListener implements ListSelectionListener 
 	{
 		/**
@@ -270,18 +283,9 @@ public class FlightsTab extends TabBase
 		public void actionPerformed(ActionEvent event) {
 			
 			if ( event.getSource() == findFlights ) {
-				flightsModel.clear();
+				clearList();
 				emptyFields();
-				ArrayList<Flight> flights = manager.findFlights((String) tFrom.getSelectedItem(),(String) tTo.getSelectedItem(),(String) tDate.getSelectedItem());
-				if ( flights.size() == 0 ) {
-					JOptionPane.showMessageDialog(null, "No Flights found");
-				}
-				else {
-					for ( Flight f : flights )
-					{
-						flightsModel.addElement(f);
-					};
-				}
+				fillList();
 			}
 			
 			if ( event.getSource() == reserve ) {
@@ -289,6 +293,8 @@ public class FlightsTab extends TabBase
 					JOptionPane.showMessageDialog(null, "Reversation created. Your code is " +
 					manager.makeReservation(manager.findFlightByCode(tFlight.getText()),tName.getText(),tCitizenship.getText()).getCode());
 					emptyFields();
+					clearList();
+					fillList();
 				} catch (NullFlightException | NoMoreSeatsException | InvalidNameException
 						| InvalidCitizenshipException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
