@@ -103,48 +103,53 @@ public class ReservationsTab extends TabBase {
 		title.setFont(new Font("serif", Font.PLAIN, 25));
 		panel.add(title, BorderLayout.NORTH);
 		
+		JPanel GridLayout = new JPanel();
+		GridLayout.setLayout(new GridLayout(7,2));
+		
 		JPanel centerPanel = new JPanel();
-		centerPanel.setLayout(new GridLayout(7,2));
+		centerPanel.setLayout(new FlowLayout());
+		centerPanel.add(GridLayout);
+		
 		
 		JLabel lCode = new JLabel("Code: ", SwingConstants.RIGHT);
 		tCode1 = new JTextField(10);
 		tCode1.setEditable(false);
-		centerPanel.add(lCode);
-		centerPanel.add(tCode1);
+		GridLayout.add(lCode);
+		GridLayout.add(tCode1);
 		
 		JLabel lFlight = new JLabel("Flight: ", SwingConstants.RIGHT);
 		tFlight = new JTextField(10);
 		tFlight.setEditable(false);
-		centerPanel.add(lFlight);
-		centerPanel.add(tFlight);
+		GridLayout.add(lFlight);
+		GridLayout.add(tFlight);
 		
 		JLabel lAirline = new JLabel("Airline: ",SwingConstants.RIGHT);
 		tAirline1 = new JTextField(10);
 		tAirline1.setEditable(false);
-		centerPanel.add(lAirline);
-		centerPanel.add(tAirline1);
+		GridLayout.add(lAirline);
+		GridLayout.add(tAirline1);
 		
 		JLabel lCost = new JLabel("Cost: ",SwingConstants.RIGHT);
 		tCost = new JTextField(10);
 		tCost.setEditable(false);
-		centerPanel.add(lCost);
-		centerPanel.add(tCost);
+		GridLayout.add(lCost);
+		GridLayout.add(tCost);
 		
 		JLabel lName = new JLabel("Name: ",SwingConstants.RIGHT);
 		tName1 = new JTextField(10);
-		centerPanel.add(lName);
-		centerPanel.add(tName1);
+		GridLayout.add(lName);
+		GridLayout.add(tName1);
 		
 		JLabel lCitizenship = new JLabel("Citizenship: ",SwingConstants.RIGHT);
 		tCitizenship = new JTextField(10);
-		centerPanel.add(lCitizenship);
-		centerPanel.add(tCitizenship);
+		GridLayout.add(lCitizenship);
+		GridLayout.add(tCitizenship);
 		
 		JLabel lStatus = new JLabel("Status: ",SwingConstants.RIGHT);
 		String[] status = {"Active", "Inactive"};
 		tStatus = new JComboBox(status);
-		centerPanel.add(lStatus);
-		centerPanel.add(tStatus);
+		GridLayout.add(lStatus);
+		GridLayout.add(tStatus);
 		
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
@@ -214,6 +219,16 @@ public class ReservationsTab extends TabBase {
 		tStatus.setSelectedIndex(0);
 		
 //		reservationsModel.clear();
+	}
+	
+	public void clearList() {
+		reservationsModel.clear();
+	}
+	
+	public void clearFilters() {
+		tCode.setText("");
+		tAirline.setText("");
+		tName.setText("");
 	}
 	
 	private class MyListSelectionListener implements ListSelectionListener 

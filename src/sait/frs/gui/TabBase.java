@@ -31,4 +31,8 @@ public abstract class TabBase
 	}
 
 	protected abstract void emptyFields();
+
+	protected abstract void clearList();
+
+	protected abstract void clearFilters();
 }

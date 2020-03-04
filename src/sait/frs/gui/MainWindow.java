@@ -168,11 +168,15 @@ private class TabButtonActionListener implements ActionListener
 			{
 				cardLayout.show(centerPanel, TAB_FLIGHTS);
 				flightsTab.emptyFields();
+				flightsTab.clearList();
+				flightsTab.clearFilters();
 			} 
 			else if (e.getSource() == reservationsButton) 
 			{
 				cardLayout.show(centerPanel, TAB_RESERVATIONS);
 				reservationsTab.emptyFields();
+				reservationsTab.clearList();
+				reservationsTab.clearFilters();
 			}
 		}
 		

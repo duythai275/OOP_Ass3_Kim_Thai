@@ -118,8 +118,6 @@ public class FlightsTab extends TabBase
 		title.setFont(new Font("serif", Font.PLAIN, 25));
 		panel.add(title, BorderLayout.NORTH);
 		
-		
-		
 		JPanel GridLayout = new JPanel();
 		GridLayout.setLayout(new GridLayout(7,2));
 		
@@ -234,12 +232,16 @@ public class FlightsTab extends TabBase
 		tCost.setText("");
 		tName.setText("");
 		tCitizenship.setText("");
-		
-//		flightsModel.clear();
-		
-//		tFrom.setSelectedIndex(0);
-//		tTo.setSelectedIndex(0);
-//		tDate.setSelectedIndex(0);
+	}
+	
+	public void clearList() {
+		flightsModel.clear();
+	}
+	
+	public void clearFilters() {
+		tFrom.setSelectedIndex(0);
+		tTo.setSelectedIndex(0);
+		tDate.setSelectedIndex(0);
 	}
 	
 	private class MyListSelectionListener implements ListSelectionListener 
