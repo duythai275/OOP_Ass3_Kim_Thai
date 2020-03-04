@@ -42,6 +42,7 @@ public class FlightsTab extends TabBase
 	private JTextField tCitizenship;
 	
 	
+	
 	/**
 	 * Creates the components for flights tab.
 	 */
