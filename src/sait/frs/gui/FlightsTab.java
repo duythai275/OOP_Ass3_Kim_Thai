@@ -56,6 +56,8 @@ public class FlightsTab extends TabBase
 	
 	/**
 	 * Creates the components for flights tab.
+	 * 
+	 * @param manager The Manager object is passed into in order to use back end in this tab
 	 */
 	public FlightsTab(Manager manager) 
 	{

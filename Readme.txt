@@ -13,8 +13,7 @@ Author
 
 How to run the program.
   - There are two options to run the program.
-	a. Using Eclipse - This program is initially generated on eclipse. When users execute the program they will be prompted to enter input,
-			   and the program will be run by the input from users.
+	a. Using Eclipse - This program is initially generated on eclipse. When users execute the program they will be prompted the main window.
 
-	b. Using Command Line - In order to use command line to run the program, a runnable JAR file must be created with Eclipse. One the JAR file is created,
-				it can be used in command line to execute the program.
+	b. Using Command Line - In order to use command line to run the program, a runnable JAR file must be created with Eclipse. One the JAR file is created, it can be used in command line to execute the program.
+	c. Double click on the runable Jar file to run the program

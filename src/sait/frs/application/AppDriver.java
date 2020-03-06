@@ -1,10 +1,5 @@
 package sait.frs.application;
 
-import java.io.EOFException;
-
-//import java.io.EOFException;
-//import java.io.IOException;
-
 import sait.frs.gui.*;
 
 /**
@@ -17,11 +12,9 @@ public class AppDriver {
 
 	/**
 	 * Entry point to Java application.
-	 * @param args
-	 * @throws EOFException 
+	 * @param args an array of strings which stores arguments passed by command line while starting a program
 	 */
-	public static void main(String[] args) throws EOFException {
-		// Create MainWindow object and involke its display() method to start program
+	public static void main(String[] args) {
 		MainWindow mainWindow = new MainWindow();
 		mainWindow.display();
 	}

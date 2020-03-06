@@ -55,6 +55,8 @@ public class ReservationsTab extends TabBase {
 	
 	/**
 	 * Creates the components for reservations tab.
+	 * 
+	 * @param manager The Manager object is passed into in order to use back end in this tab
 	 */
 	public ReservationsTab(Manager manager) {
 		this.manager = manager;
