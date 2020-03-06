@@ -8,8 +8,10 @@ import java.io.EOFException;
 import sait.frs.gui.*;
 
 /**
- * Application driver.
+ * This program demonstrates the Flight's Reservation System
  * 
+ * @author Thai Nguyen, Kim Seulgi
+ * @version March 05, 2020
  */
 public class AppDriver {
 
@@ -19,6 +21,7 @@ public class AppDriver {
 	 * @throws EOFException 
 	 */
 	public static void main(String[] args) throws EOFException {
+		// Create MainWindow object and involke its display() method to start program
 		MainWindow mainWindow = new MainWindow();
 		mainWindow.display();
 	}

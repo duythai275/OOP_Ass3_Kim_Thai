@@ -14,8 +14,12 @@ import sait.frs.manager.Manager;
 
 
 /**
- * The main window (JFrame).
+ * The main window (JFrame) contains 
+ * Flight tab and Reservation tab buttons
  * 
+ * 
+ * @author Thai Nguyen, Kim Seulgi
+ * @version March 05, 2020
  */
 public class MainWindow extends JFrame {
 	private static final String TAB_FLIGHTS = "flights";
@@ -67,20 +71,19 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		this.manager = new Manager();
 		
-		
-		
+		//Title of Window
 		setTitle("Flight Reservation Management System");
 		
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		// For tabs
 		northPanel = createNorthPanel();
 		add(northPanel, BorderLayout.NORTH);
 		
+		// For contain
 		centerPanel = createCenterPanel();
 		add(centerPanel, BorderLayout.CENTER);
-		
-//		display();
 	}
 	
 	/**
@@ -161,19 +164,28 @@ public class MainWindow extends JFrame {
 private class TabButtonActionListener implements ActionListener 
 	{
 
+		/**
+		 * Action method for buttons in the Window
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
+			// Action for clicking Flight tab button 
 			if (e.getSource() == flightsButton) 
 			{
+				// Display Flight tab content
 				cardLayout.show(centerPanel, TAB_FLIGHTS);
+				// Empty fields, list and filters when switching between tabs
 				flightsTab.emptyFields();
 				flightsTab.clearList();
 				flightsTab.clearFilters();
 			} 
+			// Action for clicking Reservation tab button 
 			else if (e.getSource() == reservationsButton) 
 			{
+				// Display Reservation tab content
 				cardLayout.show(centerPanel, TAB_RESERVATIONS);
+				// Empty fields, list and filters when switching between tabs
 				reservationsTab.emptyFields();
 				reservationsTab.clearList();
 				reservationsTab.clearFilters();

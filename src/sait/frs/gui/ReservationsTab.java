@@ -14,7 +14,12 @@ import sait.frs.problemdomain.Reservation;
 
 /**
  * Holds the components for the reservations tab.
+ * - Find reservations component
+ * - List of the selected reservations component
+ * - Update reservation component
  * 
+ * @author Thai Nguyen, Kim Seulgi
+ * @version March 05, 2020
  */
 public class ReservationsTab extends TabBase {
 	/**
@@ -22,13 +27,24 @@ public class ReservationsTab extends TabBase {
 	 */
 	private Manager manager;
 	
+	/**
+	 * List of reservations.
+	 */
 	private JList<Reservation> reversationsList;
 	private DefaultListModel<Reservation> reservationsModel;
-	private JButton findReservations;
-	private JButton update;
+	
+	/**
+	 * Fields and buttons for Find reservations component
+	 */
 	private JTextField tCode;
 	private JTextField tAirline;
 	private JTextField tName;
+	private JButton findReservations;
+	
+	/**
+	 * Fields and buttons for Update reservation
+	 */
+	private JButton update;
 	private JTextField tCode1;
 	private JTextField tFlight;
 	private JTextField tAirline1;
@@ -62,6 +78,8 @@ public class ReservationsTab extends TabBase {
 	
 	/**
 	 * Creates the north panel.
+	 * Contains the title of the tab
+	 * 
 	 * @return JPanel that goes in north.
 	 */
 	private JPanel createNorthPanel() 
@@ -75,6 +93,12 @@ public class ReservationsTab extends TabBase {
 		return panel;
 	}
 	
+	/**
+	 * Creates the center panel.
+	 * Contains the list of selected reservations
+	 * 
+	 * @return JPanel that goes in center.
+	 */
 	private JPanel createCenterPanel() {
 		JPanel panel = new JPanel();
 		
@@ -83,8 +107,10 @@ public class ReservationsTab extends TabBase {
 		reservationsModel = new DefaultListModel<>();
 		reversationsList = new JList<>(reservationsModel);
 		
+		// User can only select one item at a time.
 		reversationsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+		// Wrap JList in JScrollPane so it is scrollable.
 		JScrollPane scrollPane = new JScrollPane(this.reversationsList);
 		
 		reversationsList.addListSelectionListener(new MyListSelectionListener());
@@ -94,11 +120,18 @@ public class ReservationsTab extends TabBase {
 		return panel;
 	}
 	
+	/**
+	 * Create the east panel
+	 * Contains update reservation component
+	 * 
+	 * @return JPanel that goes in east
+	 */
 	private JPanel createEastPanel() {
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new BorderLayout(10,10));
 		
+		// Title for the component
 		JLabel title = new JLabel("Reserve", SwingConstants.CENTER);
 		title.setFont(new Font("serif", Font.PLAIN, 25));
 		panel.add(title, BorderLayout.NORTH);
@@ -110,7 +143,8 @@ public class ReservationsTab extends TabBase {
 		centerPanel.setLayout(new FlowLayout());
 		centerPanel.add(GridLayout);
 		
-		
+		// Fields and their label in Update reservation component
+		// ---------
 		JLabel lCode = new JLabel("Code: ", SwingConstants.RIGHT);
 		tCode1 = new JTextField(10);
 		tCode1.setEditable(false);
@@ -153,6 +187,7 @@ public class ReservationsTab extends TabBase {
 		
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
+		// Update button
 		update = new JButton("Update");
 		update.addActionListener(new MyActionListener());
 		panel.add(update, BorderLayout.SOUTH);
@@ -160,6 +195,10 @@ public class ReservationsTab extends TabBase {
 		return panel;
 	}
 	
+	/**
+	 * Create the west panel
+	 * @return JPanel that goes in west
+	 */
 	private JPanel createWestPanel() {
 		JPanel panel = new JPanel();
 		
@@ -168,15 +207,23 @@ public class ReservationsTab extends TabBase {
 		return panel;
 	}
 
+	/**
+	 * Create the south panel
+	 * Contains find reservation component
+	 * 
+	 * @return JPanel that goes in south
+	 */
 	private JPanel createSouthPanel() {
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new BorderLayout());
 		
+		// Title for the component
 		JLabel title = new JLabel("Search", SwingConstants.CENTER);
 		title.setFont(new Font("serif", Font.PLAIN, 25));
 		panel.add(title, BorderLayout.NORTH);
 		
+		// Label of Fields for the component
 		JPanel westPanel = new JPanel();
 		westPanel.setLayout(new GridLayout(3,1));
 		JLabel lCode = new JLabel("Code: ", SwingConstants.RIGHT);
@@ -185,9 +232,10 @@ public class ReservationsTab extends TabBase {
 		westPanel.add(lAirline);
 		JLabel lName = new JLabel("Name: ", SwingConstants.RIGHT);
 		westPanel.add(lName);
-//		
+	
 		panel.add(westPanel, BorderLayout.WEST);
 		
+		// Fields for the component
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(3,1));
 		tCode = new JTextField();
@@ -197,11 +245,9 @@ public class ReservationsTab extends TabBase {
 		tName = new JTextField();
 		centerPanel.add(tName);
 		
-		
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
-//		System.out.println(manager.getAirports());
-		
+		// Find button
 		findReservations = new JButton("Find Reservations");
 		findReservations.addActionListener(new MyActionListener());
 		panel.add(findReservations, BorderLayout.SOUTH);
@@ -209,6 +255,9 @@ public class ReservationsTab extends TabBase {
 		return panel;
 	}
 	
+	/**
+	 * Clear entered fields
+	 */
 	public void emptyFields () {
 		tCode1.setText("");
 		tFlight.setText("");
@@ -219,16 +268,25 @@ public class ReservationsTab extends TabBase {
 		tStatus.setSelectedIndex(0);
 	}
 	
+	/**
+	 * Clear list of selected flights
+	 */
 	public void clearList() {
 		reservationsModel.clear();
 	}
 	
+	/**
+	 * Clear fields in filter component
+	 */
 	public void clearFilters() {
 		tCode.setText("");
 		tAirline.setText("");
 		tName.setText("");
 	}
 	
+	/**
+	 * Fill the list with conditions in filter component
+	 */
 	private void fillList() {
 		ArrayList<Reservation> reservations = manager.findReservations(tCode.getText(), tAirline.getText(), tName.getText());
 		if ( reservations.size() == 0 ) {
@@ -243,6 +301,9 @@ public class ReservationsTab extends TabBase {
 	
 	private class MyListSelectionListener implements ListSelectionListener 
 	{
+		/**
+		 * Called when user selects an item in the JList.
+		 */
 		@Override
 		public void valueChanged(ListSelectionEvent event) {
 			try {
@@ -260,14 +321,19 @@ public class ReservationsTab extends TabBase {
 	
 	private class MyActionListener implements ActionListener
 	{
+		/**
+		 * Action for buttons
+		 */
 		@Override
 		public void actionPerformed(ActionEvent event) {
+			// Action for finding reservations
 			if ( event.getSource() == findReservations ) {
 				clearList();
 				emptyFields();
 				fillList();
 			}
 			
+			// Action for updating reservation
 			if ( event.getSource() == update ) {
 				Reservation r = manager.findReservationByCode(tCode1.getText());
 				try {

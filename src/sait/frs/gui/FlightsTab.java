@@ -14,7 +14,12 @@ import sait.frs.problemdomain.Flight;
 
 /**
  * Holds the components for the flights tab.
+ * - Find flights component
+ * - List of the selected flights component
+ * - Make reservation component
  * 
+ * @author Thai Nguyen, Kim Seulgi
+ * @version March 05, 2020
  */
 public class FlightsTab extends TabBase 
 {
@@ -28,11 +33,19 @@ public class FlightsTab extends TabBase
 	 */
 	private JList<Flight> flightsList;
 	private DefaultListModel<Flight> flightsModel;
+	
+	/**
+	 * Fields and buttons for Find flights component
+	 */
 	private JButton findFlights;
-	private JButton reserve;
 	private JComboBox tFrom;
 	private JComboBox tTo;
 	private JComboBox tDate;
+	
+	/**
+	 * Fields and buttons for Make reservation component
+	 */
+	private JButton reserve;
 	private JTextField tFlight;
 	private JTextField tAirline;
 	private JTextField tDay;
@@ -40,7 +53,6 @@ public class FlightsTab extends TabBase
 	private JTextField tCost;
 	private JTextField tName;
 	private JTextField tCitizenship;
-	
 	
 	/**
 	 * Creates the components for flights tab.
@@ -70,6 +82,8 @@ public class FlightsTab extends TabBase
 	
 	/**
 	 * Creates the north panel.
+	 * Contains the title of the tab
+	 * 
 	 * @return JPanel that goes in north.
 	 */
 	private JPanel createNorthPanel() 
@@ -85,6 +99,8 @@ public class FlightsTab extends TabBase
 	
 	/**
 	 * Creates the center panel.
+	 * Contains the list of selected flights
+	 * 
 	 * @return JPanel that goes in center.
 	 */
 	private JPanel createCenterPanel() 
@@ -109,11 +125,18 @@ public class FlightsTab extends TabBase
 		return panel;
 	}
 	
+	/**
+	 * Create the east panel
+	 * Contains make reservation component
+	 * 
+	 * @return JPanel that goes in east
+	 */
 	private JPanel createEastPanel() {
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new BorderLayout(10,10));
 		
+		// Title for the component
 		JLabel title = new JLabel("Reserve", SwingConstants.CENTER);
 		title.setFont(new Font("serif", Font.PLAIN, 25));
 		panel.add(title, BorderLayout.NORTH);
@@ -125,6 +148,8 @@ public class FlightsTab extends TabBase
 		centerPanel.setLayout(new FlowLayout());
 		centerPanel.add(GridLayout);
 		
+		// Fields and their label in Make reservation component
+		// ---------
 		JLabel lFlight = new JLabel("Flight: ", SwingConstants.RIGHT);
 		GridLayout.add(lFlight);
 		tFlight = new JTextField(10);
@@ -167,6 +192,7 @@ public class FlightsTab extends TabBase
 		
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
+		// Reservation button
 		reserve = new JButton("Reserve");
 		panel.add(reserve, BorderLayout.SOUTH);
 		reserve.addActionListener(new MyActionListener());
@@ -174,6 +200,10 @@ public class FlightsTab extends TabBase
 		return panel;
 	}
 	
+	/**
+	 * Create the west panel
+	 * @return JPanel that goes in west
+	 */
 	private JPanel createWestPanel() {
 		JPanel panel = new JPanel();
 		
@@ -182,15 +212,23 @@ public class FlightsTab extends TabBase
 		return panel;
 	}
 	
+	/**
+	 * Create the south panel
+	 * Contains find flight component
+	 * 
+	 * @return JPanel that goes in south
+	 */
 	private JPanel createSouthPanel() {
 		JPanel panel = new JPanel();
 		
 		panel.setLayout(new BorderLayout());
 		
+		// Title for the component
 		JLabel title = new JLabel("Flight Finder", SwingConstants.CENTER);
 		title.setFont(new Font("serif", Font.PLAIN, 25));
 		panel.add(title, BorderLayout.NORTH);
 		
+		// Label of Fields for the component
 		JPanel westPanel = new JPanel();
 		westPanel.setLayout(new GridLayout(3,1));
 		JLabel lFrom = new JLabel("From: ", SwingConstants.RIGHT);
@@ -202,6 +240,7 @@ public class FlightsTab extends TabBase
 
 		panel.add(westPanel, BorderLayout.WEST);
 		
+		// Fields for the component
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(3,1));
 		tFrom = new JComboBox(this.manager.getAirports().toArray(new String[manager.getAirports().size()]));
@@ -212,11 +251,9 @@ public class FlightsTab extends TabBase
 		tDate = new JComboBox(days);
 		centerPanel.add(tDate);
 		
-		
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
-//		System.out.println(manager.getAirports());
-		
+		// Find button
 		findFlights = new JButton("Find Flights");
 		findFlights.addActionListener(new MyActionListener());
 		panel.add(findFlights, BorderLayout.SOUTH);
@@ -224,6 +261,9 @@ public class FlightsTab extends TabBase
 		return panel;
 	}
 	
+	/**
+	 * Clear entered fields
+	 */
 	public void emptyFields () {
 		tFlight.setText("");
 		tAirline.setText("");
@@ -234,16 +274,25 @@ public class FlightsTab extends TabBase
 		tCitizenship.setText("");
 	}
 	
+	/**
+	 * Clear list of selected flights
+	 */
 	public void clearList() {
 		flightsModel.clear();
 	}
 	
+	/**
+	 * Clear fields in filter component
+	 */
 	public void clearFilters() {
 		tFrom.setSelectedIndex(0);
 		tTo.setSelectedIndex(0);
 		tDate.setSelectedIndex(0);
 	}
 	
+	/**
+	 * Fill the list with conditions in filter component
+	 */
 	private void fillList() {
 		ArrayList<Flight> flights = manager.findFlights((String) tFrom.getSelectedItem(),(String) tTo.getSelectedItem(),(String) tDate.getSelectedItem());
 		if ( flights.size() == 0 ) {
@@ -279,15 +328,20 @@ public class FlightsTab extends TabBase
 	
 	private class MyActionListener implements ActionListener
 	{
+		/**
+		 * Action for buttons
+		 */
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			
+			// Action for finding flights
 			if ( event.getSource() == findFlights ) {
 				clearList();
 				emptyFields();
 				fillList();
 			}
 			
+			// Action for making reservation
 			if ( event.getSource() == reserve ) {
 				try {
 					JOptionPane.showMessageDialog(null, "Reversation created. Your code is " +
